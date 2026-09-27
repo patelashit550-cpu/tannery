@@ -19,8 +19,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: SiteIdentity.description,
     start_url: withBasePath("/"),
     display: "standalone",
-    background_color: "#000000",
-    theme_color: "#000000",
+    background_color: "#ffffff",
+    theme_color: "#ffffff",
     orientation: "any",
     icons: [
       { src, sizes: "any", type: "image/png" },
