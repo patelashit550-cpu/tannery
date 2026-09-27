@@ -844,9 +844,12 @@
 }
 
 .p3-compass-watermark {
+  /* Square = inscribed dial: side length is the circle diameter. */
+  --dial-diameter: min(650px, 72vw, 80vh);
   position: fixed;
-  width: min(780px, 72vw);
-  height: auto;
+  width: var(--dial-diameter);
+  height: var(--dial-diameter);
+  aspect-ratio: 1 / 1;
   top: 50%;
   right: 5%;
   transform: translateY(-50%);
@@ -856,6 +859,7 @@
   transition: opacity 0.8s ease, filter 0.8s ease;
   pointer-events: none;
   cursor: default;
+  overflow: hidden;
 }
 
 .p3-compass-watermark.is-revealed {
@@ -871,8 +875,9 @@
 .p3-compass-watermark img {
   display: block;
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   pointer-events: none;
   user-select: none;
 }
