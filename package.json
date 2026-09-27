@@ -1,0 +1,44 @@
+{
+  "name": "tannery",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "dev:local": "node scripts/with-content-tier.mjs local next dev",
+    "dev:preprod": "node scripts/with-content-tier.mjs preprod next dev",
+    "dev:global": "node scripts/with-content-tier.mjs global next dev",
+    "build": "next build && node scripts/ipfs-relative-export.mjs",
+    "build:global": "node scripts/with-content-tier.mjs global next build && node scripts/ipfs-relative-export.mjs",
+    "build:preprod": "node scripts/with-content-tier.mjs preprod next build && node scripts/ipfs-relative-export.mjs",
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "npx tsx --test src/lib/content-tier.test.ts src/lib/json-ld.test.ts",
+    "ship": "node scripts/ship.mjs",
+    "pinata:upload": "node scripts/pinata-upload-dir.mjs"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
+    "next": "^16.3.5",
+    "postcss": "^8.5.11",
+    "radix-ui": "^1.4.3",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "^16.2.4",
+    "tailwindcss": "^4.2.2",
+    "tsx": "^4.23.12",
+    "typescript": "^5"
+  }
+}
