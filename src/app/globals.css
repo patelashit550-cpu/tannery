@@ -842,3 +842,35 @@
   color: #71717a;
   margin: 0 0 1rem;
 }
+
+.p3-compass-watermark {
+  position: fixed;
+  width: 650px;
+  height: 650px;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  z-index: 2;
+  opacity: 0.07;
+  filter: blur(3px);
+  transition: opacity 0.8s ease, filter 0.8s ease;
+  pointer-events: none;
+  cursor: default;
+}
+
+.p3-compass-watermark.is-revealed {
+  opacity: 0.85;
+  filter:
+    blur(0px)
+    drop-shadow(0 0 6px rgba(10, 10, 10, 0.28))
+    drop-shadow(0 0 18px rgba(10, 10, 10, 0.16))
+    drop-shadow(0 0 48px rgba(10, 10, 10, 0.1));
+}
+
+.p3-compass-watermark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
