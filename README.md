@@ -23,6 +23,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+For an AI-IDE walkthrough, see [How to Build a Web Application Using Tannery and an AI IDE](docs/how-to-build-with-ai-ide.md).
+
 Production static export:
 
 ```bash
