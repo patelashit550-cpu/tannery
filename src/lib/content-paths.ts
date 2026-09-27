@@ -1,6 +1,6 @@
 import path from "path";
 
-/** Markdown corpus at repo root (`ontology/**/*.md`, `ontology/**/*.mdx`). */
+/** Markdown corpus at repo root (`ontology/` plus `.md` / `.mdx`). */
 export const ONTOLOGY_ROOT = path.join(process.cwd(), "ontology");
 
 /**

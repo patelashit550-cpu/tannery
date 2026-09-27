@@ -26,11 +26,8 @@ import { resolveContentHubEssay, resolveReadingEssay } from "@/lib/resolve-readi
 import { withBasePath } from "@/lib/base-path";
 import { SiteIdentity } from "@/config/site";
 
-const NO_PUBLIC_ONTOLOGY_PATH = ["__tannery", "no_public_routes"] as const;
-
 export async function generateStaticParams() {
   return [
-    { slug: [...NO_PUBLIC_ONTOLOGY_PATH] },
     ...listContentHubStaticParams(
       (topicPath, seriesSlug) => listEssaysInTopicFolderForBuild(topicPath, { series: seriesSlug }),
       (seriesName) => listEssaysBySeriesForBuild(seriesName)
