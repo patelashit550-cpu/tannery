@@ -8,11 +8,11 @@ The app shell (layouts, bento home, reading routes, theming, draft→published f
 
 ## Preview
 
-Home (club mark):
+Home:
 ![Skin in the Game home](docs/preview-home.png)
 
-Brand icon:
-![Club brand icon](docs/preview-icon.png)
+Welcome to the Tannery:
+![Welcome to the Tannery](docs/preview-welcome.png)
 
 ## Install and run
 
