@@ -49,8 +49,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const navVisibility = getNavVisibilityPayload();
 
   return (
-    <html lang="en" className={`bg-black ${inter.variable}`}>
-      <body className={`${inter.className} bg-black text-white antialiased`}>
+    <html lang="en" className={`bg-white ${inter.variable}`}>
+      <body className={`${inter.className} bg-white text-neutral-950 antialiased`}>
         <NavVisibilityProvider value={navVisibility}>{children}</NavVisibilityProvider>
       </body>
     </html>

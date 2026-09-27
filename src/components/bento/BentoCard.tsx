@@ -139,7 +139,7 @@ export const BentoCard = forwardRef<HTMLDivElement, BentoProps>(function BentoCa
     const rowClass = cn(
       "bento-row group/item bento-row-stack rounded-sm",
       item.href
-        ? "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+        ? "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900/40"
         : "cursor-default",
       item.isNew && "bento-row--new"
     );
