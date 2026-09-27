@@ -16,7 +16,11 @@ export function CompassWatermark() {
     const watermark = watermarkRef.current;
     if (!watermark) return;
 
-    const onMove = (event: MouseEvent) => {
+    const onMove = (event: PointerEvent) => {
+      // Taps synthesize mousemove and can cover a phone viewport; only a real
+      // mouse should reveal, otherwise the overlay stays stuck at 0.85.
+      if (event.pointerType !== "mouse") return;
+
       const rect = watermark.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
       const y = rect.top + rect.height / 2;
@@ -24,9 +28,9 @@ export function CompassWatermark() {
       watermark.classList.toggle("is-revealed", near);
     };
 
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("pointermove", onMove);
     return () => {
-      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("pointermove", onMove);
       watermark.classList.remove("is-revealed");
     };
   }, []);
