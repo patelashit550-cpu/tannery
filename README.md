@@ -6,6 +6,14 @@ Display name: **Skin in the Game (Tannery)**. Repo: `tannery`.
 
 The app shell (layouts, bento home, reading routes, theming, draft→published frontmatter) is inspired by [Transition Insight](https://github.com/patelashit550-cpu/transition-insight). This template does not include that project's personal corpus.
 
+## Preview
+
+Home (club mark):
+![Skin in the Game home](docs/preview-home.png)
+
+Brand icon:
+![Club brand icon](docs/preview-icon.png)
+
 ## Install and run
 
 ```bash
