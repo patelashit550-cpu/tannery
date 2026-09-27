@@ -1,0 +1,42 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# env (secrets — never commit)
+.env
+.env.local
+.env.*.local
+.env.sovereign
+.env.sovereign.local
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+**/credentials.json
+**/service-account*.json
+**/secrets/
+*.secret
+*.secrets
+
+# os / editor
+.DS_Store
+Thumbs.db
+.cursor/*
+!.cursor/environment.json
+.vscode/*
+.snapshots/
+.sovereign/
+.tools/
+
+# debug
+npm-debug.log*
+*.log
+tsconfig.tsbuildinfo
+.aider.chat.history.md
+.aider.input.history
+.aider.tags.cache.v4/
