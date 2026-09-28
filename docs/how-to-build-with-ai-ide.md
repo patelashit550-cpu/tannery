@@ -9,7 +9,8 @@ This guide provides a step-by-step workflow for using the [`patelashit550-cpu/ta
 1. **Use the Template or Clone the Repo**
    * Go to the repository: `https://github.com/patelashit550-cpu/tannery`.
    * Click the **"Use this template"** button at the top right to create a new repository under your own GitHub account.
-   * Alternatively, clone it locally using your terminal:
+   * Alternatively, clone it locally using your terminal
+   * Incidentally if you don't know what a terminal is then ask ChatGPT or Gemini - no there's no dark sarcasm nor any such thing as a stupid question:
      ```bash
      git clone https://github.com/patelashit550-cpu/tannery.git my-new-site
      cd my-new-site
