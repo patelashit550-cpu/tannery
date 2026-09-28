@@ -10,7 +10,7 @@ This guide provides a step-by-step workflow for using the [`patelashit550-cpu/ta
    * Go to the repository: `https://github.com/patelashit550-cpu/tannery`.
    * Click the **"Use this template"** button at the top right to create a new repository under your own GitHub account.
    * Alternatively, clone it locally using your terminal
-   * If you don't know what a terminal is ask ChatGPT or Gemini and use their support until you have the IDE configured
+   * Ask ChatGPT or Gemini for support throughout until you have the IDE configured. Thereafter use them to supplement IDE agent support.
      ```bash
      git clone https://github.com/patelashit550-cpu/tannery.git my-new-site
      cd my-new-site
