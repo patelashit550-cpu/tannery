@@ -108,4 +108,4 @@ npm run build
 
 ## License / credit
 
-Use this as a template for your own site. Credit: shell patterns by Transition Insight.
+This utility is provided without reservations as is - Transition Insight
