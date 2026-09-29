@@ -13,7 +13,7 @@
     "build:preprod": "node scripts/with-content-tier.mjs preprod next build && node scripts/ipfs-relative-export.mjs",
     "start": "next start",
     "lint": "eslint .",
-    "test": "npx tsx --test src/lib/content-tier.test.ts src/lib/json-ld.test.ts",
+    "test": "npx tsx --test src/lib/content-tier.test.ts src/lib/json-ld.test.ts src/lib/essay-header-css.test.ts",
     "ship": "node scripts/ship.mjs",
     "pinata:upload": "node scripts/pinata-upload-dir.mjs"
   },

@@ -175,6 +175,11 @@ function assetSrc(src: string): string {
   return src.startsWith("/") ? withBasePath(src) : src;
 }
 
+/** inset | figure | plate → editorial plate (desktop split beside copy; mobile stacked) */
+function isPlateImageRole(imageRole?: string): boolean {
+  return imageRole === "inset" || imageRole === "figure" || imageRole === "plate";
+}
+
 function createMarkdownComponents(): Components {
   return {
     table: ({ children, ...props }) => (
@@ -207,37 +212,69 @@ function headingAnchor(text: string): string {
 }
 
 function NarrativeEssayBody({
+  lead,
   image,
   imageAlt,
   imageRole = "figure",
   content,
   components,
 }: {
+  lead?: ReactNode;
   image?: string;
   imageAlt: string;
   imageRole?: string;
   content: string;
   components: Components;
 }) {
-  const isPlateFigure = Boolean(image && (imageRole === "inset" || imageRole === "figure" || imageRole === "plate"));
+  const isPlateFigure = Boolean(image && isPlateImageRole(imageRole));
   const hasBody = Boolean(content.trim());
   if (!hasBody && !image) return null;
 
-  return (
-    <div className="p3-narrative-layout">
-      {hasBody && (
-        <section className={["p3-narrative-body", isPlateFigure ? "p3-narrative-body--with-plate" : ""].filter(Boolean).join(" ")}>
-          {isPlateFigure && image ? (
-            <figure className="p3-narrative-figure p3-narrative-figure--plate">
-              <img src={assetSrc(image)} alt={imageAlt} loading="eager" className="p3-narrative-figure__img p3-narrative-figure__img--plate" />
-            </figure>
-          ) : null}
-          {content.trim() ? (
-            <ReactMarkdown components={components}>{content}</ReactMarkdown>
-          ) : null}
-        </section>
+  const plateFigure =
+    isPlateFigure && image ? (
+      <figure className="p3-narrative-figure p3-narrative-figure--plate">
+        <img
+          src={assetSrc(image)}
+          alt={imageAlt}
+          loading="eager"
+          className="p3-narrative-figure__img p3-narrative-figure__img--plate"
+        />
+      </figure>
+    ) : null;
+
+  const copyInner = content.trim() ? (
+    <ReactMarkdown components={components}>{content}</ReactMarkdown>
+  ) : null;
+
+  const bodyClassName = ["p3-narrative-body", isPlateFigure ? "p3-narrative-body--with-plate" : ""]
+    .filter(Boolean)
+    .join(" ");
+
+  const bodySection = hasBody ? (
+    <section className={bodyClassName}>
+      {isPlateFigure ? (
+        <>
+          <div className="p3-narrative-body__lead">
+            {lead}
+            {plateFigure}
+          </div>
+          <div className="p3-narrative-body__copy">{copyInner}</div>
+        </>
+      ) : (
+        copyInner
       )}
-    </div>
+    </section>
+  ) : null;
+
+  if (isPlateFigure) {
+    return <div className="p3-narrative-layout">{bodySection}</div>;
+  }
+
+  return (
+    <>
+      {lead}
+      {bodySection ? <div className="p3-narrative-layout">{bodySection}</div> : null}
+    </>
   );
 }
 
@@ -319,11 +356,13 @@ function SingleArticle({ data, canonicalUrl }: { data: EssayData; canonicalUrl?:
       ))}
 
       <article className="p3-narrative-article">
-        <header className="p3-narrative-article__header">
-          <h1 className="p3-narrative-article__title">{frontmatter.title}</h1>
-          <span className="p3-narrative-article__rule" aria-hidden="true" />
-        </header>
         <NarrativeEssayBody
+          lead={
+            <header className="p3-narrative-article__header">
+              <h1 className="p3-narrative-article__title">{frontmatter.title}</h1>
+              <span className="p3-narrative-article__rule" aria-hidden="true" />
+            </header>
+          }
           image={image}
           imageAlt={imageAlt}
           imageRole={imageRole}
@@ -424,12 +463,14 @@ function TopicLayout({
       ) : null}
 
       <article className="p3-topic-article p3-narrative-article">
-        <header className="p3-narrative-article__header">
-          <h1 className="p3-narrative-article__title">{title}</h1>
-          {subtitle && <p className="p3-topic-article__subtitle">{subtitle}</p>}
-          <span className="p3-narrative-article__rule" aria-hidden="true" />
-        </header>
         <NarrativeEssayBody
+          lead={
+            <header className="p3-narrative-article__header">
+              <h1 className="p3-narrative-article__title">{title}</h1>
+              {subtitle && <p className="p3-topic-article__subtitle">{subtitle}</p>}
+              <span className="p3-narrative-article__rule" aria-hidden="true" />
+            </header>
+          }
           image={image}
           imageAlt={imageAlt}
           imageRole={imageRole}
@@ -440,6 +481,11 @@ function TopicLayout({
               <h2 {...props} id={headingAnchor(headingText(children))}>
                 {children}
               </h2>
+            ),
+            h3: ({ children, ...props }) => (
+              <h3 {...props} id={headingAnchor(headingText(children))}>
+                {children}
+              </h3>
             ),
           }}
         />
