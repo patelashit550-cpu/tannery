@@ -5,12 +5,33 @@
 :root {
   --p3-bento-list-s: 1.12;
   --p3-shell-nav-font: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --p3-photo-emerald-mat-fill: rgba(16, 185, 129, 0.85);
+  --p3-photo-emerald-mat-gap: 4px;
+  --p3-photo-emerald-mat-radius: 0.5rem;
   --p3-essay-figure-gutter-x: clamp(1.75rem, 3.5vw, 2.25rem);
   --p3-essay-figure-gutter-y: clamp(1.25rem, 2.5vw, 1.75rem);
   --p3-essay-figure-block-gap: clamp(1.75rem, 3vw, 2.25rem);
+  --p3-essay-subtitle-gap-below: 1.35rem;
+  /* Light-canvas analogue of TI's readable kicker (not dim #71717a). */
+  --p3-essay-subtitle-color: #52525b;
+  /*
+   * Essay page titles — three increments below the original 2.5rem / 40px stack
+   * (~32% at desktop: 2.5rem → 1.6875rem / 27px). Shared so plate-split and
+   * non-plate essays pick it up without per-page overrides.
+   */
+  --p3-essay-title-size: clamp(0.945rem, 3.8vw, 1.35rem);
+  --p3-essay-title-size-md: 1.6875rem;
+  --p3-essay-title-size-fit: clamp(0.9rem, 2.2vw, 1.3125rem);
+  --p3-essay-inline-title-size: 1.625rem;
   --p3-essay-plate-max: 800px;
   --p3-essay-plate-gap: 2.5rem;
   --p3-essay-plate-radius: 4px;
+  /* Desktop plate+copy split (min-width: 1025px — same cutoff as the topic rail). */
+  --p3-essay-plate-split-image: minmax(12rem, 0.42fr);
+  --p3-essay-plate-split-copy: minmax(0, 0.58fr);
+  --p3-essay-plate-split-gap: clamp(1.5rem, 2.5vw, 2.25rem);
+  --p3-essay-plate-split-max: 68rem;
+  --p3-essay-plate-sticky-top: 7rem;
   --p3-shell-header-link-hover: #0a0a0a;
   --p3-shell-header-brand-sub-hover: #0a0a0a;
 }
@@ -389,20 +410,32 @@
   margin-bottom: 3rem;
 }
 
+.p3-narrative-article:has(.p3-narrative-body--with-plate) .p3-narrative-article__header {
+  text-align: left;
+}
+
+.p3-narrative-article:has(.p3-narrative-body--with-plate) .p3-narrative-article__rule {
+  margin-left: 0;
+  margin-right: auto;
+}
+
 .p3-narrative-article__title {
   margin: 0;
-  font-size: clamp(1.35rem, 5.5vw, 1.875rem);
+  font-size: var(--p3-essay-title-size);
   font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1.15;
   text-transform: uppercase;
   color: #0a0a0a;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 @media (min-width: 768px) {
   .p3-narrative-article__title {
-    font-size: 2.5rem;
+    font-size: var(--p3-essay-title-size-md);
     letter-spacing: 0.2em;
+    line-height: 1.05;
   }
 }
 
@@ -411,12 +444,34 @@
   width: 5rem;
   height: 1px;
   margin: 1.25rem auto 0;
-  background: #0a0a0a;
+  background: rgba(52, 211, 153, 0.7);
 }
 
 .p3-narrative-layout {
   display: block;
   max-width: 100%;
+}
+
+.p3-narrative-body--with-plate::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.p3-narrative-body__copy {
+  min-width: 0;
+}
+
+.p3-narrative-body__lead {
+  min-width: 0;
+}
+
+.p3-narrative-body--with-plate > .p3-narrative-body__copy {
+  margin-top: 0;
+}
+
+.p3-narrative-body__copy > * + * {
+  margin-top: 1.75rem;
 }
 
 .p3-narrative-body {
@@ -435,12 +490,34 @@
   text-underline-offset: 0.18em;
 }
 
-.p3-narrative-body h2 {
-  margin: 2.25rem 0 0.85rem;
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.p3-narrative-body h1,
+.p3-narrative-body h2,
+.p3-narrative-body h3,
+.p3-narrative-body h4 {
+  margin: 3rem 0 var(--p3-essay-subtitle-gap-below);
   color: #0a0a0a;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-align: left;
+  hyphens: none;
+}
+
+.p3-narrative-body h1:not(.p3-narrative-article__title) {
+  font-size: var(--p3-essay-inline-title-size);
+}
+
+.p3-narrative-body h2 {
+  font-size: 1.375rem;
+}
+
+.p3-narrative-body h3 {
+  font-size: 1.125rem;
+}
+
+.p3-narrative-body h4 {
+  font-size: 1rem;
 }
 
 .p3-narrative-body ol,
@@ -471,20 +548,263 @@
   max-width: var(--p3-essay-plate-max);
   height: auto;
   margin: 0 auto var(--p3-essay-plate-gap);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
   border-radius: var(--p3-essay-plate-radius);
 }
 
-.p3-narrative-figure--plate {
-  margin: 0 0 var(--p3-essay-plate-gap);
+.p3-narrative-figure.p3-narrative-figure--plate {
+  display: block;
+  float: none;
+  clear: both;
+  width: 100%;
+  max-width: var(--p3-essay-plate-max);
+  margin: 0 auto var(--p3-essay-plate-gap);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
+.p3-narrative-figure--plate .p3-narrative-figure__img,
 .p3-narrative-figure__img--plate {
   display: block;
   width: 100%;
   max-width: var(--p3-essay-plate-max);
   height: auto;
-  margin-inline: auto;
-  border-radius: var(--p3-essay-plate-radius);
+  margin: 0 auto;
+  object-fit: unset;
+  object-position: center;
+}
+
+.p3-narrative-body--with-plate > .p3-narrative-body__lead {
+  margin-top: 0;
+}
+
+.p3-narrative-body--with-plate > .p3-narrative-body__lead > .p3-narrative-figure--plate {
+  margin-top: 0;
+}
+
+.p3-narrative-body--with-plate > .p3-narrative-body__lead .p3-narrative-article__header,
+.p3-narrative-body--with-plate > .p3-narrative-body__lead .p3-narrative-article__title {
+  margin-top: 0;
+}
+
+.p3-narrative-body--with-plate .p3-narrative-figure--plate + :is(h2, h3, h4),
+.p3-narrative-body--with-plate .p3-narrative-body__copy > :is(h2, h3, h4):first-child {
+  margin-top: 0;
+}
+
+.p3-narrative-body--with-plate > h2:first-of-type,
+.p3-narrative-body--with-plate > h3:first-of-type,
+.p3-narrative-body--with-plate > h4:first-of-type,
+.p3-narrative-body--with-plate .p3-narrative-body__copy > h2:first-of-type,
+.p3-narrative-body--with-plate .p3-narrative-body__copy > h3:first-of-type,
+.p3-narrative-body--with-plate .p3-narrative-body__copy > h4:first-of-type {
+  text-align: left;
+  text-wrap: balance;
+  hyphens: none;
+}
+
+/*
+ * Desktop split (≥1025px): title+plate | copy. Left pane locked from first paint.
+ * Right pane independently scrolls the essay. 1025px matches the topic rail.
+ */
+@media (min-width: 1025px) {
+  html:has(.p3-narrative-body--with-plate),
+  body:has(.p3-narrative-body--with-plate) {
+    height: 100%;
+    max-height: 100svh;
+    overflow: hidden;
+  }
+
+  .p3-reading-main:has(.p3-narrative-body--with-plate) {
+    display: flex;
+    flex-direction: column;
+    height: 100svh;
+    max-height: 100svh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .p3-reading-main:has(.p3-narrative-body--with-plate) > .p3-narrative-canvas,
+  .p3-reading-main:has(.p3-narrative-body--with-plate) > .p3-topic-canvas {
+    flex: 1 1 auto;
+    height: auto;
+    max-height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: 1.5rem;
+  }
+
+  .p3-topic-canvas:has(.p3-narrative-body--with-plate) {
+    align-items: stretch;
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .p3-topic-canvas:has(.p3-narrative-body--with-plate) .p3-topic-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .p3-topic-canvas:has(.p3-narrative-body--with-plate) .p3-topic-nav__sticky {
+    position: static;
+    top: auto;
+    max-height: none;
+    align-self: flex-start;
+    justify-content: flex-start;
+  }
+
+  .p3-topic-canvas:has(.p3-narrative-body--with-plate) .p3-topic-nav__list {
+    flex: 0 1 auto;
+    justify-content: flex-start;
+  }
+
+  .p3-narrative-canvas:has(.p3-narrative-body--with-plate) {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .p3-narrative-article:has(.p3-narrative-body--with-plate),
+  .p3-topic-article:has(.p3-narrative-body--with-plate) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--p3-essay-plate-split-max);
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .p3-narrative-layout:has(.p3-narrative-body--with-plate) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .p3-narrative-body--with-plate {
+    display: grid;
+    grid-template-columns: var(--p3-essay-plate-split-image) var(--p3-essay-plate-split-copy);
+    column-gap: var(--p3-essay-plate-split-gap);
+    align-items: stretch;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .p3-narrative-body--with-plate::after {
+    display: none;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__lead {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    padding-top: 0;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__lead .p3-narrative-article__header {
+    flex-shrink: 0;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    padding-top: 0;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__lead .p3-narrative-article__title {
+    margin-top: 0;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__lead > .p3-narrative-figure--plate {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: transparent;
+    container-type: size;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__lead
+    .p3-narrative-figure__img--plate,
+  .p3-narrative-body--with-plate > .p3-narrative-body__lead
+    .p3-narrative-figure__img {
+    flex: 0 1 auto;
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    max-width: 100cqw;
+    max-height: 100cqh;
+    min-width: 0;
+    min-height: 0;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__copy {
+    grid-column: 2;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    margin-top: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(52, 211, 153, 0.35) transparent;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__copy :is(h2, h3, h4) {
+    letter-spacing: 0.06em;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__copy h2 {
+    font-size: 1.125rem;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__copy h3 {
+    font-size: 1rem;
+  }
+
+  .p3-narrative-body--with-plate > .p3-narrative-body__copy h4 {
+    font-size: 0.9375rem;
+  }
+}
+
+/* Emerald photo-mat: plate/inset heroes, other figure imgs, and markdown body photos.
+   Feature lead images (`.p3-inline-image--feature`) stay unmatted. */
+.p3-narrative-figure__img,
+.p3-narrative-body img:not(.p3-inline-image--feature) {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  padding: var(--p3-photo-emerald-mat-gap);
+  border: 0;
+  background: var(--p3-photo-emerald-mat-fill);
+  border-radius: var(--p3-photo-emerald-mat-radius);
+  overflow: hidden;
+  box-shadow:
+    0 20px 44px -20px rgba(0, 0, 0, 0.75),
+    0 14px 36px -16px rgba(16, 185, 129, 0.2);
 }
 
 .p3-home-content-band {
@@ -835,12 +1155,45 @@
   }
 }
 
+.p3-topic-article__title {
+  font-size: var(--p3-essay-title-size);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+  color: #0a0a0a;
+}
+
+@media (min-width: 768px) {
+  .p3-topic-article__title {
+    font-size: var(--p3-essay-title-size-md);
+  }
+}
+
 .p3-topic-article__subtitle {
   font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #71717a;
+  color: var(--p3-essay-subtitle-color);
   margin: 0 0 1rem;
+  text-align: left;
+}
+
+.p3-narrative-body p.p3-topic-article__subtitle {
+  color: var(--p3-essay-subtitle-color);
+  text-align: left;
+  margin: 0 0 1rem;
+}
+
+.p3-narrative-article__header:has(.p3-topic-article__title-row),
+.p3-narrative-article__header:has(.p3-topic-article__subtitle) {
+  text-align: left;
+}
+
+.p3-narrative-article__header:has(.p3-topic-article__title-row) .p3-narrative-article__rule,
+.p3-narrative-article__header:has(.p3-topic-article__subtitle) .p3-narrative-article__rule {
+  margin-left: 0;
+  margin-right: auto;
 }
 
 .p3-compass-watermark {
