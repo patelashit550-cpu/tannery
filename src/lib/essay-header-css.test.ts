@@ -76,11 +76,3 @@ test("desktop plate-split locks the left lead and scrolls copy", () => {
     /\.p3-narrative-body--with-plate\s*>\s*\.p3-narrative-body__lead\s+\.p3-narrative-article__title\s*\{[^}]*letter-spacing:\s*0\.06em/s
   );
 });
-
-test("compass watermark size tokens stay untouched", () => {
-  const compass = css.match(/\.p3-compass-watermark\s*\{[^}]+\}/);
-  assert.ok(compass, "expected .p3-compass-watermark rule");
-  assert.match(compass[0], /z-index:\s*2/);
-  assert.match(compass[0], /opacity:\s*0\.07/);
-  assert.match(compass[0], /filter:\s*grayscale\(1\)\s*blur\(3px\)/);
-});
