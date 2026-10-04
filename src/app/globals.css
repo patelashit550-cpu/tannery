@@ -726,6 +726,9 @@
 
   .p3-narrative-body--with-plate > .p3-narrative-body__lead .p3-narrative-article__title {
     margin-top: 0;
+    /* Drop the 0.2em display tracking so a 27px plate title stays a title. */
+    letter-spacing: 0.06em;
+    line-height: 1.2;
   }
 
   .p3-narrative-body--with-plate > .p3-narrative-body__lead > .p3-narrative-figure--plate {
@@ -799,7 +802,15 @@
   box-sizing: border-box;
   padding: var(--p3-photo-emerald-mat-gap);
   border: 0;
-  background: var(--p3-photo-emerald-mat-fill);
+  /* Emerald is the padding ring only. A second layer fills the content box
+     with the light canvas so a transparent SVG cannot turn the mat into a
+     flat emerald field. Opaque plates cover that layer with their own pixels. */
+  background-color: transparent;
+  background-image:
+    linear-gradient(#fafafa, #fafafa),
+    linear-gradient(var(--p3-photo-emerald-mat-fill), var(--p3-photo-emerald-mat-fill));
+  background-origin: content-box, padding-box;
+  background-clip: content-box, padding-box;
   border-radius: var(--p3-photo-emerald-mat-radius);
   overflow: hidden;
   box-shadow:

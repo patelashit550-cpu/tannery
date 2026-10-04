@@ -6,9 +6,9 @@ stage: published
 order: 1
 publishedAt: 2026-01-02
 series: tannery
-image: /visuals/sundial_letters_outer.svg
+image: /visuals/skin.png
 imageRole: inset
-imageAlt: Sundial watermark
+imageAlt: Ink and wash sketch of a canoe hull on a workshop frame
 tags:
   - REPLACE_ME
 showInNav: true
