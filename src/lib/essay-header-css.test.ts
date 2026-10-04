@@ -67,6 +67,14 @@ test("desktop plate-split locks the left lead and scrolls copy", () => {
     /\.p3-narrative-body--with-plate\s*>\s*\.p3-narrative-body__copy\s*\{[^}]*overflow-y:\s*auto/s
   );
   assert.match(css, /--p3-photo-emerald-mat-fill:\s*rgba\(16,\s*185,\s*129,\s*0\.85\)/);
+  assert.match(
+    css,
+    /\.p3-narrative-figure__img[\s\S]*background-clip:\s*content-box,\s*padding-box/
+  );
+  assert.match(
+    css,
+    /\.p3-narrative-body--with-plate\s*>\s*\.p3-narrative-body__lead\s+\.p3-narrative-article__title\s*\{[^}]*letter-spacing:\s*0\.06em/s
+  );
 });
 
 test("compass watermark size tokens stay untouched", () => {
