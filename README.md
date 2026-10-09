@@ -108,4 +108,4 @@ npm run build
 
 ## License / credit
 
-This utility is provided without reservations (copyleft) as it is - Transition Insight
+This utility is provided without reservations - copyleft Transition Insight 
